@@ -19,15 +19,16 @@ interface Repository {
 const Dashboard: React.FC = () => {
   const [newRepo, setNewRepo] = useState('');
   const [inputError, setInputError] = useState('');
-  const [repositories, setRepositories] = useState<Repository[]>(() => {
+  const [repositories, setRepositories] = useState<Repository[]>([]);
+
+  useEffect(() => {
     const storageRepositories = localStorage.getItem(
       '@GithubExplorer:repositories',
     );
-
     if (storageRepositories) {
-      return JSON.parse(storageRepositories);
+      setRepositories(JSON.parse(storageRepositories));
     }
-  });
+  }, []);
 
   useEffect(() => {
     localStorage.setItem(
